@@ -7,7 +7,6 @@ import com.github.devmanu.automaticbooks.book_openers.BookOpener_1_8;
 import com.github.devmanu.automaticbooks.commands.BookCommand;
 import com.github.devmanu.automaticbooks.events.JoinEvent;
 import com.github.devmanu.automaticbooks.events.ResourcePackEvent;
-import jdk.internal.util.xml.impl.ReaderUTF8;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,10 +21,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import stats.Metrics;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,9 +62,6 @@ public class AutomaticBooks extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new JoinEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new ResourcePackEvent(this), this);
         getCommand("book").setExecutor(new BookCommand(this));
-
-        Metrics metrics = new Metrics(this, 5715);
-
 
         updater = new Updater(this);
 
@@ -213,7 +209,7 @@ public class AutomaticBooks extends JavaPlugin {
 
 
                 try {
-                    ReaderUTF8 reader = new ReaderUTF8(new FileInputStream(joinBook));
+					BufferedReader reader = Files.newBufferedReader(joinBook.toPath());
                     JSONParser parser = new JSONParser();
                     joinData = (JSONObject) parser.parse(reader);
                 } catch (IOException | ParseException e) {
@@ -223,7 +219,7 @@ public class AutomaticBooks extends JavaPlugin {
         }.runTaskAsynchronously(this);
 
         try {
-            ReaderUTF8 reader = new ReaderUTF8(new FileInputStream(configFile));
+			BufferedReader reader = Files.newBufferedReader(joinBook.toPath());
             config = YamlConfiguration.loadConfiguration(reader);
             reader.close();
         } catch (IOException e) {

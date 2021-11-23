@@ -9,7 +9,6 @@ import com.comphenix.protocol.wrappers.MinecraftKey;
 import com.github.devmanu.automaticbooks.AutomaticBooks;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import net.minecraft.server.v1_15_R1.EnumHand;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
